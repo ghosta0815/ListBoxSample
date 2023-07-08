@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="ListBoxSample.PersonItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ListBoxSample"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="200">
+    <UserControl.Resources>
+        <Style x:Key="PersonItem" TargetType="{x:Type ContentControl}">
+            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Foreground" Value="Green"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <!-- Bind to a Value of the element itself -->
+                            <Ellipse Grid.Column="0"
+                                     d:Width="20"
+                                     d:Height="20"
+                                     Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                     Fill="Yellow"/>
+                            <!-- Binding to a property of the ViewModel in the ItemsSource -->
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding FirstName}"
+                                       Background="{TemplateBinding Background}"
+                                       d:Text="d:First Name"/>
+                            <!--Binding to the Setter for Background-->
+                            <Ellipse Grid.Column="0"
+                                     Grid.Row="1"
+                                     Fill="{TemplateBinding Background}"
+                                     d:Fill="Red"
+                                     Width="20"
+                                     Height="20"/>
+                            <!-- Binding through the Outer Elements Content Property -->
+                            <ContentPresenter Grid.Column="1"
+                                              Grid.Row="1"
+                                              d:Content="Content of the Outer Element"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <!-- Binding through the ContentControls Content Property -->
+    <ContentControl Style="{StaticResource PersonItem}" >
+        
+        <CheckBox Content="{Binding LastName}"/>
+    </ContentControl>
+</UserControl>
